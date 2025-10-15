@@ -1,9 +1,9 @@
 <script>
-  import recipesData from '$lib/data/recipes.json';
-
+  import recipesData from '../../data/recipes.json';
+  
   // TODO: Import your NutritionDisplay component here
-  import NutritionDisplay from '$lib/components/NutritionDisplay.svelte';
-
+  // import NutritionDisplay from '$lib/components/NutritionDisplay.svelte';
+  
   const recipes = recipesData.data.recipes;
   let selectedRecipe = recipes[0];
 </script>
