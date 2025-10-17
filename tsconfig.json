@@ -5,14 +5,14 @@
     "paths": {
       "$lib/*": ["src/lib/*"]
     },
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": true,
     "strict": true,
     "allowJs": true,
-    "types": ["svelte"]
+    "types": ["svelte","vitest/globals","@testing-library/jest-dom"]
   },
   "include": ["src"]
 }
