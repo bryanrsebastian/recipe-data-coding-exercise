@@ -1,144 +1,104 @@
 # Front-End Developer Coding Exercise
 
-## Overview
-
-Welcome to our take-home coding exercise! This exercise is designed to assess your skills in front-end development, particularly your ability to:
-
-- Organize and structure code effectively
-- Understand and implement requirements
-- Document assumptions and decisions
-- Manage application state
-- Apply UI design and UX conventions
-- Work with data transformations and calculations
-
-**Time Expectation:** 2-4 hours
-
-## The Task
-
-Build a **Nutrition Information Display Component** that allows users to view and interact with nutritional data from recipes. The component should provide a smooth user experience for viewing nutrition information in different units and serving sizes.
-
-Completing the core functionality should be a fairly straightforward task: This should allow you scope to fine-tune the user-experience and visuals. We're looking for both a clean technical implementation and a display that looks and feels great.
-
-## Requirements
-
-### Core Functionality
-
-1. **Display Nutrition Information**
-   - Show energy, fat, fibre, protein, carbohydrate, and sodium values
-   - Display values with appropriate units and formatting
-
-2. **Display Ingredients List**
-   - Show all ingredients with their amounts
-   - Display ingredient names and measurements
-   - Scale ingredient amounts based on serving size adjustments
-   - Convert ingredient amounts according to selected unit system
-
-3. **Unit System Toggle**
-   - Allow users to switch between metric and imperial units
-   - Metric: kilojoules (kJ) ,grams (g), kilograms (kg), millilitres (ml), litres (l)
-   - Imperial: nutritional calories/kilocalories (cal), ounces (oz), pounds (lb), fluid ounces (fl oz)
-   - Convert ingredient amounts to "friendly" display units, eg: display 1.1kg instead of 1100g
-
-4. **Serving Size Scaling**
-   - Allow users to adjust serving count up and down in increments of 1 serving.
-   - Scale all nutrition values proportionally
-   - Scale all ingredient amounts proportionally
-   - A simple multiplier approach is fine
-
-### Technical Requirements
-
-- **Preferred Stack:** SvelteKit + Vite + Tailwind/SASS
-- **Alternatives Accepted:** React, Vue, or Vanilla JavaScript
-- Use the provided sample data (see `/data` folder)
-- Implement proper state management
-- Include basic documentation
-- Add simple tests where appropriate
-
-### UX Considerations
-
-- Choose appropriate UI patterns for unit switching and serving adjustment
-- Consider the devices and input modes likely to be used 
-- Ensure the interface is attractive, intuitive and accessible
-- Handle edge cases gracefully (e.g., very small/large serving sizes)
-- Consider loading states and user feedback
-
-## Sample Data
-
-Sample recipe data with nutrition information is provided in the `/data` folder. This includes:
-
-- Recipe metadata
-- Ingredient lists with `metricMeasurement` values (grams or ml)
-- Nutrition information per serving
-- Multiple recipe examples to test with
-
 ## Getting Started
 
-1. **Fork this repository** to your GitHub account
-2. **Choose your approach:**
-   - You can use the Svelte starter template in `/templates`, or start from scratch with your preferred setup
-3. **Review the component requirements** in `/docs/component-requirements.md`
-4. **Implement the solution** according to the requirements
-5. **Document your approach** and any assumptions made
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-## What We're Looking For
+2. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
-### Code Organization
-- Clear project structure
-- Logical component hierarchy
-- Separation of concerns
-- Source control etiquette
+3. **Open your browser:**
+   Navigate to `http://localhost:5173`
 
-### Requirements Understanding
-- All core functionality implemented
-- Edge cases considered
-- UX best practices applied
-
-### Documentation
-- Clear setup and run instructions
-- Explanation of architectural decisions
-- Documentation of any assumptions made
-
-### State Management
-- Appropriate state handling approach
-- Clean data flow
-- Predictable state updates
-
-### UI/UX Design
-- Intuitive user interface
-- Responsive design considerations
-- Accessibility best practices
-
-## Submission Guidelines
-
-**📋 For detailed submission instructions, see [`/docs/submission-guidelines.md`](./docs/submission-guidelines.md)**
-
-### Quick Summary:
-1. **Fork this repository** to your GitHub account
-2. **Choose your approach:** Use a starter template or build from scratch
-3. **Implement the requirements** according to the specifications
-4. **Document your solution** with a clear README
-5. **Push to your fork** and send us the repository link
-
-## Questions?
-
-If you have any questions about the requirements or need clarification, please don't hesitate to reach out. We're happy to provide guidance to ensure you can showcase your best work.
-
-Good luck, and we look forward to seeing your solution!
+2. **Automation testing:**
+   ```bash
+   npx svelte-check
+   ```
 
 ---
 
-## Repository Structure
+## Project Structure
 
 ```
-├── README.md                 # This file
-├── data/                     # Sample recipe data
-│   ├── recipes.json          # Recipe collection
-│   └── README.md             # Data format documentation
-├── docs/                     # Detailed documentation
-│   ├── component-requirements.md
-│   └── assessment-criteria.md
-└── templates/                # Optional starter templates
-    ├── sveltekit/
-    ├── react/
-    └── vue/
+├── README.md                                      # This file
+├── src/                                           # Main folder of the application
+│   ├── lib/                                       # Reusable modules, utilities, components, and shared logic
+│   │   ├── components/                            # Reusable UI components
+│   │   │   ├── IngredientsList.svelte
+│   │   │   ├── IngredientsList.test.ts
+│   │   │   ├── NutritionInformation.svelte
+│   │   │   └── NutritionInformation.test.ts
+│   │   ├── data/                                  # Static JSON or data files used by the app
+│   │   │   ├── README.md
+│   │   │   └── recipes.json
+│   │   ├── types/                                 # TypeScript type definitions and interfaces
+│   │   │   └── recipe.ts
+│   │   ├── utils/                                 # Utility/helper functions
+│   │   │   ├── ingredientCalculations.ts
+│   │   │   ├── nutritionCalculations.ts
+│   │   │   └── servingCalculations.ts
+│   ├── routes/                                    # Defines all the pages and routes of the SvelteKit app
+│   │   ├── +layout.svelte                         # Shared layout for all pages
+│   │   └── +page.svelte                           # Main page
+│   ├── app.css                                    # Global stylesheet for your entire app
+│   ├── app.html                                   # HTML template that wraps the Svelte app (root document)
+│   └── app.svelte                                 # Root Svelte component, entry point of your UI
 ```
+
+---
+
+## Architectural Decisions
+
+Since the application focuses on a single-page structure, I decided to place the main content inside `+page.svelte` under the `src/routes/` directory. This allows the page to serve as the central container for rendering the core components of the recipe data.
+
+To maintain modularity and clean separation of concerns, the page delegates specific content sections to two dedicated components:
+- **NutritionInformation.svelte** – displays computed nutritional values for the recipe.
+- **IngredientsList.svelte** – displays the list of ingredients with their computed values.
+
+Each component is paired with its own unit test file `(.test.ts)` to ensure maintainability and independent verification of rendering logic and calculation results.
+
+For data and calculation logic, three dedicated utility files were created under `src/lib/utils/`:
+- **servingCalculations.ts** – handles scaling based on serving sizes.
+- **nutritionCalculations.ts** – processes nutrient conversions and formatting.
+- **ingredientCalculations.ts** – manages ingredient unit conversions between metric and imperial systems.
+
+Although the formatter functions are commonly shared across these utilities, they are kept inside their respective files to prevent naming conflicts and ensure consistent unit conversion behavior—especially when switching between metric (g/ml) and imperial (oz/fl oz) units.
+
+This structure keeps the project:
+- **Scalable**, by isolating logic into small, reusable modules.
+- **Testable**, with separate test files for each component.
+- **Readable**, by organizing code around function and responsibility.
+- **Maintainable**, enabling future extensions (e.g., additional sections or conversions) without disrupting existing logic.
+
+---
+
+## Assumption and Trade-Offs
+- Assuming all recipe data will always include `ingredientsCollection`.
+- Assuming serving sizes are positive numbers.
+- Assuming density values are always given in `g/ml`.
+- Assuming converion of density values in imperial unit are always in `oz/fl oz` or `lb/fl oz`.
+- Assuming the `recipe.ts` is a real data, the one that adjusted is the `src/lib/types/recipe.ts` for the `null` and `undefined` value.
+- Choosing **simplicity over flexibility** by keeping only one page `(+page.svelte)`.
+- Keeping **formatters inside utility files** (to avoid naming conflicts) at the cost of code duplication.
+- Using **imperial conversion approximations** for readability rather than extreme precision.
+
+---
+
+## Time spent on the exercise
+
+** 11 hrs **
+
+- Reading of all instructions
+- Understaing the requirements
+- Familiarity with the structure
+- Installation of the repository
+- Understanding how the SvelteKit works
+- Contructing of components
+- Creating of utilities
+- Creating this documentation
+- Uploading in the hosting
