@@ -1,15 +1,16 @@
 <script lang="ts">
   import recipesData from '$lib/data/recipes.json';
 
-  import NutritionDisplay from '$lib/components/NutritionDisplay.svelte';
+  import type { RecipeType, RecipeNutritionIngredientsType } from '$lib/types/recipe.ts';
 
-  import type { Recipe, NutritionDisplayProps } from '$lib/types/recipe';
+  import NutritionInformation from '$lib/components/NutritionInformation.svelte';
+  import IngredientsList from '$lib/components/IngredientsList.svelte';
 
-  const recipes:Recipe[] = recipesData.data.recipes;
+  const recipes:RecipeType[] = recipesData.data.recipes;
   let selectedRecipe = recipes[0];
 
-  let selectedServings:NutritionDisplayProps['servings'] = selectedRecipe.yield ?? 1;
-  let selectedUnitSystem:NutritionDisplayProps['unitSystem'] = "metric";
+  let selectedServings:RecipeNutritionIngredientsType['servings'] = selectedRecipe.yield ?? 1;
+  let selectedUnitSystem:RecipeNutritionIngredientsType['unitSystem'] = "metric";
 </script>
 
 <section class="mb-8">
@@ -94,59 +95,17 @@
     </div>
   </div>
   <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-    <NutritionDisplay
+    <NutritionInformation
+      recipe={selectedRecipe}
+      servings={selectedServings}
+      unitSystem={selectedUnitSystem}
+    />
+    <br/>
+    <IngredientsList
       recipe={selectedRecipe}
       servings={selectedServings}
       unitSystem={selectedUnitSystem}
     />
   </div>
 
-  <!-- TODO: Replace this placeholder with your NutritionDisplay component -->
-  <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-    <h3 class="text-lg font-semibold text-yellow-800 mb-4">
-      🚧 Implement NutritionDisplay Component Here
-    </h3>
-
-    <div class="text-sm text-yellow-700 mb-4">
-      <p>Your component should display nutrition information AND ingredients list:</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-4">
-      <div class="bg-white rounded p-4 border">
-        <h4 class="font-medium mb-2">Nutrition (per serving):</h4>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <div>Energy: {selectedRecipe.nutritionalSummary.energy} kJ</div>
-          <div>Fat: {selectedRecipe.nutritionalSummary.fat}g</div>
-          <div>Fibre: {selectedRecipe.nutritionalSummary.fibre}g</div>
-          <div>Protein: {selectedRecipe.nutritionalSummary.protein}g</div>
-          <div>Carbohydrate: {selectedRecipe.nutritionalSummary.carbohydrate}g</div>
-          <div>Sodium: {selectedRecipe.nutritionalSummary.sodium}mg</div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded p-4 border">
-        <h4 class="font-medium mb-2">Ingredients ({selectedRecipe.ingredientsCollection.total} items):</h4>
-        <div class="space-y-1 text-sm">
-          {#each selectedRecipe.ingredientsCollection.items as ingredient}
-            {#if ingredient.food}
-              <div>{ingredient.food.name}: {ingredient.metricMeasurement}g/ml</div>
-            {:else if ingredient.heading}
-              <div class="font-medium text-gray-600 mt-2">{ingredient.heading}</div>
-            {/if}
-          {/each}
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-4 text-sm text-yellow-700">
-      <p>Replace this entire yellow section with:</p>
-      <code class="bg-yellow-100 px-2 py-1 rounded text-xs">
-        &lt;NutritionDisplay recipe={selectedRecipe} /&gt;
-      </code>
-    </div>
-  </div>
-
-  <!-- Uncomment when you've implemented your component:
-  <NutritionDisplay recipe={selectedRecipe} />
-  -->
 </section>
