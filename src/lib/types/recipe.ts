@@ -1,10 +1,4 @@
-export interface NutritionDisplayProps {
-  recipe: Recipe;
-  servings: number;
-  unitSystem?: 'metric' | 'imperial';
-}
-
-export interface Recipe {
+export interface RecipeType {
   sys: { id: string };
   name: string;
   nutritionalSummary: {
@@ -18,11 +12,17 @@ export interface Recipe {
   yield: number;
   ingredientsCollection: {
     total: number;
-    items: Ingredient[];
+    items: IngredientsListType[];
   };
 }
 
-export interface Ingredient {
+export interface RecipeNutritionIngredientsType {
+  recipe: RecipeType;
+  servings: number;
+  unitSystem?: 'metric' | 'imperial';
+}
+
+export interface IngredientsListType {
   sys: { id: string };
   measurement?: string | null;
   metricMeasurement?: number | undefined;
