@@ -23,7 +23,7 @@
 
         <!-- If key is 'energy', don't convert — just keep kJ -->
         {@const formatted = key === 'energy'
-          ? { value: calculated.toFixed(3), unit: 'kJ' }
+          ? { value: calculated.toFixed(2), unit: 'kJ' }
           : nutritionCalculations(calculated, key === 'sodium' ? 'mg' : 'g', unitSystem)
         }
 
