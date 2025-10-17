@@ -1,0 +1,18 @@
+{
+  "extends": "./.svelte-kit/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "$lib/*": ["src/lib/*"]
+    },
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "allowJs": true,
+    "types": ["svelte"]
+  },
+  "include": ["src"]
+}
