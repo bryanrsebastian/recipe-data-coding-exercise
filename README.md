@@ -91,7 +91,7 @@ This structure keeps the project:
 
 ## Time spent on the exercise
 
-** 11 hrs **
+Total of **11 hrs**
 
 - Reading of all instructions
 - Understaing the requirements
